@@ -24,15 +24,31 @@ def rename_files(directory, old_text, new_text):
     :param new_text: новый текст
     """
     
+    if not os.path.exists(directory):
+        print(f"Ошибка: Папка '{directory}' не существует!")
+        return
+    
+    renamed_count = 0
+    
     for filename in os.listdir(directory):
         if old_text in filename:
             new_name = filename.replace(old_text, new_text)
             old_path = os.path.join(directory, filename)
             new_path = os.path.join(directory, new_name)
             
-            os.rename(old_path, new_path)
-            print(f'Переименован: {filename} -> {new_name}')
+            try:
+                os.rename(old_path, new_path)
+                print(f'Переименован: {filename} -> {new_name}')
+                renamed_count += 1
+            except Exception as e:
+                print(f'Ошибка при переименовании {filename}: {e}')
+    
+    if renamed_count == 0:
+        print("Не найдено файлов для переименования.")
+    else:
+        print(f"Всего переименовано файлов: {renamed_count}")
             
+
 def main():
     try:
         while True:
@@ -40,7 +56,7 @@ def main():
             hacker_signature_compact()
             print("\n")
             
-            directory= input('Введите путь: ')
+            directory = input('Введите путь: ')
             old_text = input('Введите старое название: ')
             new_text = input('Введите новое название: ')
             
