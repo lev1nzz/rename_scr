@@ -14,21 +14,21 @@ signal.signal(signal.SIGTERM, signal_handler)
 signal.signal(signal.SIGINT, signal_handler)
 
 
-def rename_files(direcotry, old_text, new_text):
+def rename_files(directory, old_text, new_text):
     """
     Docstring for rename_files
     Переименновывает файлы в указанной директории.
     
-    :param direcotry: Путь к папке 
+    :param directory: Путь к папке 
     :param old_text: текст для замены
     :param new_text: новый текст
     """
     
-    for filename in os.listdir(direcotry):
+    for filename in os.listdir(directory):
         if old_text in filename:
             new_name = filename.replace(old_text, new_text)
-            old_path = os.path.join(direcotry, filename)
-            new_path = os.path.join(direcotry, new_text)
+            old_path = os.path.join(directory, filename)
+            new_path = os.path.join(directory, new_name)
             
             os.rename(old_path, new_path)
             print(f'Переименован: {filename} -> {new_name}')
@@ -40,11 +40,11 @@ def main():
             hacker_signature_compact()
             print("\n")
             
-            direcotry = input('Введите путь: ')
+            directory= input('Введите путь: ')
             old_text = input('Введите старое название: ')
             new_text = input('Введите новое название: ')
             
-            rename_files(direcotry, old_text, new_text)
+            rename_files(directory, old_text, new_text)
             time.sleep(0.3)
     except KeyboardInterrupt:
         print('Прерванно пользователем')
